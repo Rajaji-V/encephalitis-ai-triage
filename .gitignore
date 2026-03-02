@@ -18,3 +18,12 @@ pip-delete-this-directory.txt
 .venv
 env.bak/
 venv.bak/
+
+# Data and Models (Keep structure, ignore content)
+data/**
+!data/
+!data/raw/
+!data/processed/
+!data/models/
+curl_*.txt
+*.pth

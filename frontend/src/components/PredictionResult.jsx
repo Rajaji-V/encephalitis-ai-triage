@@ -5,8 +5,8 @@ export default function PredictionResult({ result }) {
     const { prediction, explanation } = result;
 
     const getStatusColor = (diagnosis) => {
-        if (diagnosis === 'Non-infectious') return 'success';
-        if (['Amoebic', 'Bacterial', 'Viral'].includes(diagnosis)) return 'danger';
+        if (diagnosis === 'Healthy') return 'success';
+        if (diagnosis === 'Encephalitis') return 'danger';
         return 'warning';
     };
 
@@ -33,7 +33,7 @@ export default function PredictionResult({ result }) {
                 </h3>
                 <div style={{ margin: '0.5rem 0' }}>
                     <span className={`status-badge ${status}`} style={{ marginRight: '0.5rem' }}>
-                        {prediction.diagnosis} Encephalitis
+                        {prediction.diagnosis}
                     </span>
                     <span className={`status-badge ${riskStatus}`} style={{ fontSize: '0.875rem', padding: '0.35rem 0.75rem', verticalAlign: 'middle' }}>
                         {prediction.risk_level}
@@ -67,7 +67,7 @@ export default function PredictionResult({ result }) {
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
                         {Object.entries(prediction.class_probabilities).map(([className, prob]) => (
                             <div key={className} style={{ display: 'flex', alignItems: 'center' }}>
-                                <div style={{ width: '150px', fontSize: '0.875rem' }}>{className} Encephalitis</div>
+                                <div style={{ width: '150px', fontSize: '0.875rem' }}>{className}</div>
                                 <div style={{ flex: 1, backgroundColor: 'var(--border)', height: '6px', borderRadius: '3px', margin: '0 1rem' }}>
                                     <div style={{ width: `${prob}%`, height: '100%', backgroundColor: getStatusColor(className) === 'danger' ? 'var(--danger)' : 'var(--success)', borderRadius: '3px' }} />
                                 </div>

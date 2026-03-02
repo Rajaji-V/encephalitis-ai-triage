@@ -8,18 +8,21 @@ import base64
 import torch
 import uvicorn
 
+import os
+
 app = FastAPI(title="Encephalitis Diagnosis API")
 
-# Allow all origins for dev
+# Allow specific origins for dev (FastAPI doesn't allow "*" with allow_credentials=True)
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=["http://localhost:5173", "http://127.0.0.1:5173"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-model = ml_model.load_model()
+MODEL_PATH = r"d:\Projects\MiniProject2\data\models\final_model.pth"
+model = ml_model.load_model(MODEL_PATH if os.path.exists(MODEL_PATH) else None)
 
 @app.get("/health")
 def health_check():

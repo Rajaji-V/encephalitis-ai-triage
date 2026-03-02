@@ -10,3 +10,5 @@ shap
 matplotlib
 pymongo
 python-dotenv
+pandas
+scikit-learn
