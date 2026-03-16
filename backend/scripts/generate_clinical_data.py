@@ -23,19 +23,33 @@ def generate_clinical_data():
         filenames = [f for f in os.listdir(folder_path) if f.lower().endswith(('.png', '.jpg', '.jpeg'))]
         
         for filename in filenames:
-            # Clinical feature generation logic
+            # Clinical feature generation logic with noise and overlap
+            # 10% chance to have an atypical case
+            is_atypical = random.random() < 0.1
+            
             if label == "healthy":
-                age = random.randint(18, 70)
-                csf_protein = round(random.uniform(15, 45), 2)  # Normal range: 15-45 mg/dL
-                csf_glucose = round(random.uniform(50, 80), 2)   # Normal range: 50-80 mg/dL
-                symptom_severity = random.randint(0, 2)         # Low severity
+                age = random.randint(18, 75)
+                if not is_atypical:
+                    csf_protein = round(random.uniform(15, 45), 2)
+                    csf_glucose = round(random.uniform(50, 80), 2)
+                    symptom_severity = random.randint(0, 3)
+                else:
+                    # Healthy image but slightly elevated clinical markers
+                    csf_protein = round(random.uniform(45, 60), 2)
+                    csf_glucose = round(random.uniform(40, 55), 2)
+                    symptom_severity = random.randint(3, 5)
                 diagnosis = "Healthy"
             else:
-                age = random.randint(5, 80)
-                # Encephalitis/Tumor profile
-                csf_protein = round(random.uniform(60, 200), 2) # Elevated protein in encephalitis
-                csf_glucose = round(random.uniform(20, 45), 2)  # Low glucose in bacterial/fungal
-                symptom_severity = random.randint(6, 10)        # High severity
+                age = random.randint(5, 85)
+                if not is_atypical:
+                    csf_protein = round(random.uniform(65, 250), 2)
+                    csf_glucose = round(random.uniform(15, 40), 2)
+                    symptom_severity = random.randint(6, 10)
+                else:
+                    # Encephalitis image but relatively normal clinical markers
+                    csf_protein = round(random.uniform(40, 60), 2)
+                    csf_glucose = round(random.uniform(45, 60), 2)
+                    symptom_severity = random.randint(3, 6)
                 diagnosis = "Encephalitis"
             
             data.append({
